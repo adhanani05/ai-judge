@@ -1,0 +1,116 @@
+[
+  {
+    "id": "sub_1",
+    "queueId": "queue_1",
+    "labelingTaskId": "task_1",
+    "createdAt": 1690000000000,
+    "questions": [
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_1",
+          "questionType": "single_choice_with_reasoning",
+          "questionText": "Is the sky blue?"
+        }
+      },
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_2",
+          "questionType": "free_form",
+          "questionText": "Explain why the ocean appears blue."
+        }
+      }
+    ],
+    "answers": {
+      "q_template_1": {
+        "choice": "yes",
+        "reasoning": "Because of light scattering during the day."
+      },
+      "q_template_2": {
+        "response": "Water absorbs red wavelengths and scatters blue light, giving it a blue color."
+      }
+    }
+  },
+
+  {
+    "id": "sub_2",
+    "queueId": "queue_1",
+    "labelingTaskId": "task_2",
+    "createdAt": 1690000100000,
+    "questions": [
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_3",
+          "questionType": "single_choice_with_reasoning",
+          "questionText": "Does 2 + 2 equal 4?"
+        }
+      },
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_4",
+          "questionType": "single_choice_with_reasoning",
+          "questionText": "Is the Earth flat?"
+        }
+      }
+    ],
+    "answers": {
+      "q_template_3": {
+        "choice": "yes",
+        "reasoning": "It is a basic arithmetic fact."
+      },
+      "q_template_4": {
+        "choice": "no",
+        "reasoning": "The Earth is an oblate spheroid, not flat."
+      }
+    }
+  },
+
+  {
+    "id": "sub_3",
+    "queueId": "queue_2",
+    "labelingTaskId": "task_3",
+    "createdAt": 1690000200000,
+    "questions": [
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_5",
+          "questionType": "single_choice_with_reasoning",
+          "questionText": "Can plants grow without sunlight?"
+        }
+      },
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_6",
+          "questionType": "free_form",
+          "questionText": "Why is oxygen important for humans?"
+        }
+      },
+      {
+        "rev": 1,
+        "data": {
+          "id": "q_template_7",
+          "questionType": "single_choice_with_reasoning",
+          "questionText": "Is the Moon made of cheese?"
+        }
+      }
+    ],
+    "answers": {
+      "q_template_5": {
+        "choice": "no",
+        "reasoning": "Plants require sunlight for photosynthesis."
+      },
+      "q_template_6": {
+        "response": "Oxygen is used for cellular respiration to produce energy."
+      },
+      "q_template_7": {
+        "choice": "no",
+        "reasoning": "The Moon is made of rock, not cheese."
+      }
+    }
+  }
+]
