@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { ref, deleteObject } from 'firebase/storage';
+import { db, storage } from '../lib/firebase';
 
 const Navbar = () => {
   const location = useLocation();
@@ -19,6 +20,32 @@ const Navbar = () => {
   const resetAllData = async () => {
     setIsResetting(true);
     try {
+      // First, collect all attachment storage paths from submissions
+      const submissionsSnapshot = await getDocs(collection(db, 'submissions'));
+      const attachmentPaths: string[] = [];
+      
+      submissionsSnapshot.docs.forEach(docSnapshot => {
+        const submission = docSnapshot.data();
+        if (submission.attachments && Array.isArray(submission.attachments)) {
+          submission.attachments.forEach((attachment: any) => {
+            if (attachment.storagePath) {
+              attachmentPaths.push(attachment.storagePath);
+            }
+          });
+        }
+      });
+
+      // Delete all attachment files from Firebase Storage
+      console.log(`Deleting ${attachmentPaths.length} attachment files from storage...`);
+      const storageDeletePromises = attachmentPaths.map(storagePath => {
+        const storageRef = ref(storage, storagePath);
+        return deleteObject(storageRef).catch(error => {
+          console.warn(`Failed to delete storage file ${storagePath}:`, error);
+          // Don't throw - continue with other deletions even if some fail
+        });
+      });
+      await Promise.all(storageDeletePromises);
+
       // Clear all Firebase collections
       const collections = ['submissions', 'judges', 'evaluations', 'assignments', 'queues'];
       
@@ -30,6 +57,7 @@ const Navbar = () => {
         await Promise.all(deletePromises);
       }
       
+      console.log('All data reset successfully');
       // Reload the page to refresh all data
       window.location.reload();
     } catch (error) {
@@ -87,6 +115,7 @@ const Navbar = () => {
                 <li>Evaluations</li>
                 <li>Assignments</li>
                 <li>Queues</li>
+                <li>Uploaded attachments (files stored in Firebase Storage)</li>
               </ul>
               <p style={{ fontWeight: 'bold', color: '#f44336' }}>
                 This action cannot be undone!

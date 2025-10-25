@@ -9,9 +9,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 
-// ------------------------------
-// 🧩 Type Definition
-// ------------------------------
+// Type Definition
 export type Judge = {
   id?: string;
   name: string;
@@ -22,14 +20,10 @@ export type Judge = {
   updatedAt: number;
 };
 
-// ------------------------------
-// 🔥 Collection Reference
-// ------------------------------
+// Collection Reference
 const JUDGES_COLLECTION = "judges";
 
-// ------------------------------
-// 📦 Fetch All Judges
-// ------------------------------
+// Fetch All Judges
 export async function getJudges(): Promise<Judge[]> {
   const snap = await getDocs(collection(db, JUDGES_COLLECTION));
   return snap.docs.map((d) => ({
@@ -38,9 +32,7 @@ export async function getJudges(): Promise<Judge[]> {
   }));
 }
 
-// ------------------------------
-// ✨ Create Judge (with ID + timestamps)
-// ------------------------------
+// Create Judge (with ID + timestamps)
 export async function createJudge(judge: Omit<Judge, "id">) {
   const timestamp = Date.now();
   const data = { ...judge, createdAt: timestamp, updatedAt: timestamp };
@@ -53,9 +45,7 @@ export async function createJudge(judge: Omit<Judge, "id">) {
   return docRef.id;
 }
 
-// ------------------------------
-// 🛠 Update Judge
-// ------------------------------
+// Update Judge
 export async function updateJudge(id: string, data: Partial<Judge>) {
   await updateDoc(doc(db, JUDGES_COLLECTION, id), {
     ...data,
@@ -64,9 +54,7 @@ export async function updateJudge(id: string, data: Partial<Judge>) {
   console.log("✅ Judge updated:", id);
 }
 
-// ------------------------------
-// ❌ Delete Judge
-// ------------------------------
+// Delete Judge
 export async function deleteJudge(id: string) {
   await deleteDoc(doc(db, JUDGES_COLLECTION, id));
   console.log("🗑️ Judge deleted:", id);

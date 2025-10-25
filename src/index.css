@@ -370,6 +370,132 @@ button:focus-visible {
   color: inherit;
 }
 
+/* Submissions Section Styles */
+.submissions-section {
+  background-color: rgba(255, 107, 53, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 107, 53, 0.1);
+  margin-top: 2rem;
+}
+
+.submissions-section h3 {
+  margin: 0 0 1.5rem 0;
+  color: #ff6b35;
+  font-size: 1.5rem;
+}
+
+.submissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.submission-item {
+  background-color: rgba(255, 107, 53, 0.05);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 107, 53, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submission-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+}
+
+.submission-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.submission-id {
+  font-weight: 600;
+  color: #2c2c2c;
+  font-size: 1.1rem;
+}
+
+.submission-queue {
+  background-color: rgba(255, 107, 53, 0.2);
+  color: #ff6b35;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+.submission-actions {
+  margin-bottom: 1rem;
+}
+
+.attachment-button {
+  background-color: #ff6b35;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.attachment-button:hover:not(:disabled) {
+  background-color: #e55a2b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.attachment-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.attachments-list {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 107, 53, 0.1);
+}
+
+.attachments-list h4 {
+  margin: 0 0 0.75rem 0;
+  color: #2c2c2c;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.attachment-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 107, 53, 0.05);
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.attachment-name {
+  font-weight: 500;
+  color: #2c2c2c;
+  font-size: 0.9rem;
+}
+
+.attachment-type {
+  font-size: 0.8rem;
+  color: #666666;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
 @media (max-width: 768px) {
   .upload-page {
     padding: 1rem;
@@ -390,6 +516,25 @@ button:focus-visible {
   
   .upload-area h3 {
     font-size: 1.25rem;
+  }
+  
+  .submissions-section {
+    padding: 1.5rem;
+  }
+  
+  .submission-item {
+    padding: 1rem;
+  }
+  
+  .submission-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .attachment-button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
   }
 }
 

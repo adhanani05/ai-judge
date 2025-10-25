@@ -13,9 +13,17 @@ export const runJudgeEvaluation = onCall<{
   judgePrompt: string; 
   questionText: string; 
   answer: string; 
-  model: string; 
+  model: string;
+  attachments?: Array<{
+    id: string;
+    filename: string;
+    storagePath: string;
+    downloadURL: string;
+    contentType: string;
+    uploadedAt: number;
+  }>;
 }, any>(async (request) => {
-  const { judgePrompt, questionText, answer, model } = request.data;
+  const { judgePrompt, questionText, answer, model, attachments = [] } = request.data;
 
   // ✅ Read the injected secret from process.env
   const apiKey = process.env.OPENAI_API_KEY;
@@ -26,6 +34,46 @@ export const runJudgeEvaluation = onCall<{
 
   const openai = new OpenAI({ apiKey });
 
+  // Check if model supports vision
+  const visionModels = ['gpt-4o', 'gpt-4-turbo', 'gpt-4-vision-preview', 'gpt-4o-mini'];
+  const supportsVision = visionModels.includes(model);
+
+  // Build content array for user message
+  const userContent: any[] = [
+    {
+      type: "text" as const,
+      text: `Question: ${questionText}\nAnswer: ${answer}`,
+    },
+  ];
+
+  // Process attachments (images only)
+  if (attachments.length > 0) {
+    for (const attachment of attachments) {
+      const attachmentUrl = attachment.downloadURL;
+      
+      if (attachmentUrl.endsWith(".png") || attachmentUrl.endsWith(".jpg") || attachmentUrl.endsWith(".jpeg") || attachmentUrl.endsWith(".webp")) {
+        // For images: add as image_url content
+        if (supportsVision) {
+          userContent.push({
+            type: "image_url" as const,
+            image_url: { url: attachmentUrl }
+          });
+        } else {
+          userContent.push({
+            type: "text" as const,
+            text: `[Image attachment: ${attachment.filename} - not processed by ${model}]`
+          });
+        }
+      } else {
+        // For non-image files, add as text note
+        userContent.push({
+          type: "text" as const,
+          text: `[Attachment: ${attachment.filename} - ${attachment.contentType}]`
+        });
+      }
+    }
+  }
+
   const messages = [
     {
       role: "system" as const,
@@ -33,12 +81,7 @@ export const runJudgeEvaluation = onCall<{
     },
     {
       role: "user" as const,
-      content: [
-        {
-          type: "text" as const,
-          text: `Question: ${questionText}\nAnswer: ${answer}`,
-        },
-      ],
+      content: userContent,
     },
   ];
 

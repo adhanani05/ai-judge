@@ -66,6 +66,13 @@ export default function QueueDetailPage() {
             `Question: ${q.data.id} | Assigned Judges:`,
             activeJudges.map((j) => j.name)
           );
+          
+          if (sub.attachments && sub.attachments.length > 0) {
+            console.log(
+              `Submission ${sub.id} has ${sub.attachments.length} attachment(s):`,
+              sub.attachments.map((att: any) => `${att.filename} (${att.contentType})`)
+            );
+          }
 
           if (activeJudges.length === 0) {
             console.warn(
@@ -88,6 +95,7 @@ export default function QueueDetailPage() {
                   questionText,
                   answer: JSON.stringify(answer),
                   model: judge.model,
+                  attachments: sub.attachments || [],
                 });
 
                 await saveEvaluation({
