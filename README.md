@@ -72,7 +72,7 @@ The app runs at http://localhost:5173.
 ### 5) Images allowed; PDFs not evaluated by the model
 **Why**: OpenAI can read image URLs directly, but PDFs require a heavier pipeline (download from storage → upload to OpenAI Files API → reference by file_id). That adds bandwidth, latency, and more error cases.
 
-**Impact**: Multimodal evaluations work for screenshots without extra backend complexity. PDFs still upload to storage for record-keeping but are not parsed by the model.
+**Impact**: Multimodal evaluations work for screenshots without extra backend complexity.
 
 **Future**: Add a PDF path in the Cloud Function that streams the file to OpenAI's Files API when a vision-capable model is selected.
 
